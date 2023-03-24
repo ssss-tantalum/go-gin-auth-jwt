@@ -1,0 +1,32 @@
+version: "3.8"
+services:
+  app:
+    build: .
+    tty: true
+    stdin_open: true
+    command: /bin/bash
+    volumes:
+      - ..:/var/www
+    ports:
+      - 8080:8080
+  postgres:
+    image: postgres:latest
+    container_name: postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - progresDB:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_USER=root
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_DB=mydb
+  redis:
+    image: redis:alpine
+    container_name: redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redisDB:/data
+volumes:
+  redisDB:
+  progresDB:
